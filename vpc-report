@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# Reports all VPCs to standard output in Markdown Format
+# Author: Paulo Henrique Ortolan
+
+source lib/help.sh
+source lib/markdown.sh
+source lib/vpc.sh
+
+# Constants
+OUTPUT_DIR="output"
+
+# Variables
+AWS_PROFILE=""
+AWS_REGION=""
+VPC_LIST=()
+VPC_JSON=""
+SUBNETS_JSON=""
+
+# Main program
+
+if [ -z "$1" ]
+  then
+    syntax "profile"
+fi
+
+if [ -z "$2" ]
+  then
+    syntax "region"
+fi
+
+AWS_PROFILE=$1
+AWS_REGION=$2
+
+if [ -d "$OUTPUT_DIR" ]; then
+  rm -Rf $OUTPUT_DIR
+fi
+
+mkdir $OUTPUT_DIR
+
+h1 "$AWS_PROFILE $AWS_REGION VPC List"
+
+fetch_all_vpcs
+describe_vpcs
+
+rm -Rf $OUTPUT_DIR
+
+exit 0
