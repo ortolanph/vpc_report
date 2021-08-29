@@ -31,6 +31,7 @@ function bullet_field() {
 	echo "* $1: **$2**"
 }
 
+# Creates a bold text
 function bold() {
 	echo "**$1**"
 }
